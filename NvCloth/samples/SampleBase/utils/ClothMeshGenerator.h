@@ -10,6 +10,7 @@
 
 #pragma once
 #include <vector>
+#include <string>
 #include <foundation/PxVec3.h>
 #include <foundation/PxVec2.h>
 #include "NvClothExt/ClothFabricCooker.h"

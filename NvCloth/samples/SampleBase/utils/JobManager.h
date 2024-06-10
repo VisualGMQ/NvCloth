@@ -16,6 +16,7 @@
 #include <mutex>
 #include <thread> 
 #include <condition_variable>
+#include <functional>
 
 #include <foundation/PxVec4.h>
 #include <foundation/PxVec3.h>

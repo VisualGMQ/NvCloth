@@ -6,12 +6,12 @@ CD /D %~dp0
 
 REM Install cmake using packman
 set PACKMAN=call ../scripts/packman/packman.cmd
-%PACKMAN% pull -p windows "../scripts/packman/packages/cmake.packman.xml"
+REM %PACKMAN% pull -p windows "../scripts/packman/packages/cmake.packman.xml"
 IF %ERRORLEVEL% NEQ 0 (
     set EXIT_CODE=%ERRORLEVEL%
     goto End
 )
-set CMAKE=%PM_cmake_PATH%/bin/cmake.exe
+set CMAKE=cmake.exe
 
 REM Make sure the various variables that we need are set
 
@@ -31,10 +31,10 @@ set SAMPLES_ROOT_DIR=%~dp0
 
 REM Generate projects here
 
-rmdir /s /q compiler\vc14win64-cmake\
-mkdir compiler\vc14win64-cmake\
-pushd compiler\vc14win64-cmake\
-%CMAKE% ..\.. -G "Visual Studio 14 2015" -Ax64 -DCUDA_TOOLKIT_ROOT_DIR="%CUDA_PATH_%" -DTARGET_BUILD_PLATFORM=windows -DSTATIC_WINCRT=0 -DBL_DLL_OUTPUT_DIR=%OUTPUT_ROOT%\bin\vc14win64-cmake -DBL_LIB_OUTPUT_DIR=%OUTPUT_ROOT%\lib\vc14win64-cmake -DBL_EXE_OUTPUT_DIR=%OUTPUT_ROOT%\bin\vc14win64-cmake
+rmdir /s /q compiler\vc17win64-cmake\
+mkdir compiler\vc17win64-cmake\
+pushd compiler\vc17win64-cmake\
+%CMAKE% ..\.. -G "Visual Studio 17 2022" -Ax64 -DTARGET_BUILD_PLATFORM=windows -DSTATIC_WINCRT=0 -DBL_DLL_OUTPUT_DIR=%OUTPUT_ROOT%\bin\vc14win64-cmake -DBL_LIB_OUTPUT_DIR=%OUTPUT_ROOT%\lib\vc14win64-cmake -DBL_EXE_OUTPUT_DIR=%OUTPUT_ROOT%\bin\vc14win64-cmake
 popd
 
 

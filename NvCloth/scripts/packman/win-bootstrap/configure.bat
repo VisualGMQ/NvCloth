@@ -53,6 +53,7 @@
 @if exist "%PM_PYTHON%" goto PACKMAN
 @if not exist "%PM_PYTHON_BASE_DIR%" call :CREATE_PYTHON_BASE_DIR
 
+@echo "call ps1"
 @set PM_PYTHON_PACKAGE=python@%PM_PYTHON_VERSION%.cab
 @for /f "delims=" %%a in ('powershell -ExecutionPolicy ByPass -NoLogo -NoProfile -File "%~dp0\generate_temp_file_name.ps1"') do @set TEMP_FILE_NAME=%%a
 @set TARGET=%TEMP_FILE_NAME%.zip
@@ -110,9 +111,7 @@
 @del "%TARGET%"
 
 :ENSURE_7ZA
-@set PM_7Za_VERSION=16.02.2
-@set PM_7Za_PATH=%PM_PACKAGES_ROOT%\7za\%PM_7ZA_VERSION%
-@if exist "%PM_7Za_PATH%" goto END
+@set PM_7Za_VERSION=16.02.4
 @set PM_7Za_PATH=%PM_PACKAGES_ROOT%\chk\7za\%PM_7ZA_VERSION%
 @if exist "%PM_7Za_PATH%" goto END
 

@@ -30,12 +30,14 @@ IF %2. NEQ . (set USE_DX11=%2)
 
 REM Install cmake using packman
 set PACKMAN=call scripts/packman/packman.cmd
-%PACKMAN% pull -p windows "scripts/packman/packages/cmake.packman.xml"
-IF %ERRORLEVEL% NEQ 0 (
-    set EXIT_CODE=%ERRORLEVEL%
-    goto End
-)
-set CMAKE=%PM_cmake_PATH%/bin/cmake.exe
+REM %PACKMAN% pull -p windows "scripts/packman/packages/cmake.packman.xml"
+REM IF %ERRORLEVEL% NEQ 0 (
+REM     set EXIT_CODE=%ERRORLEVEL%
+REM     goto End
+REM )
+REM set CMAKE=%PM_cmake_PATH%/bin/cmake.exe
+set CMAKE=cmake.exe
+echo %CMAKE%
 
 REM Common for all generators
 set CMAKE_COMMON_PARAMS=-DTARGET_BUILD_PLATFORM=windows -DNV_CLOTH_ENABLE_DX11=%USE_DX11% -DNV_CLOTH_ENABLE_CUDA=%USE_CUDA% -DPX_GENERATE_GPU_PROJECTS=1 -DCUDA_TOOLKIT_ROOT_DIR="%CUDA_PATH_%" -DWIN8SDK_PATH="%WIN8SDK_PATH%" -DSTATIC_WINCRT=1
@@ -55,12 +57,16 @@ REM pushd compiler\vc11win64-cmake\
 REM %CMAKE% ..\cmake\windows -G "Visual Studio 11 2012" -Ax64 %CMAKE_COMMON_PARAMS% -DPX_OUTPUT_DLL_DIR=%PX_OUTPUT_ROOT%\bin\vc11win64-cmake -DPX_OUTPUT_LIB_DIR=%PX_OUTPUT_ROOT%\lib\vc11win64-cmake -DPX_OUTPUT_EXE_DIR=%PX_OUTPUT_ROOT%\bin\vc11win64-cmake
 REM popd
 
+echo "running cmake..."
+
+echo "generating vs 2013 x32 project"
 rmdir /s /q compiler\vc12win32-cmake\
 mkdir compiler\vc12win32-cmake\
 pushd compiler\vc12win32-cmake\
 %CMAKE% ..\cmake\windows -G "Visual Studio 12 2013" -AWin32 %CMAKE_COMMON_PARAMS% -DPX_OUTPUT_DLL_DIR=%PX_OUTPUT_ROOT%\bin\vc12win32-cmake -DPX_OUTPUT_LIB_DIR=%PX_OUTPUT_ROOT%\lib\vc12win32-cmake -DPX_OUTPUT_EXE_DIR=%PX_OUTPUT_ROOT%\bin\vc12win32-cmake
 popd
 
+echo "generating vs 2013 x64 project"
 rmdir /s /q compiler\vc12win64-cmake\
 mkdir compiler\vc12win64-cmake\
 pushd compiler\vc12win64-cmake\
@@ -71,6 +77,12 @@ rmdir /s /q compiler\vc14win64-cmake\
 mkdir compiler\vc14win64-cmake\
 pushd compiler\vc14win64-cmake\
 %CMAKE% ..\cmake\windows -G "Visual Studio 14 2015" -Ax64 %CMAKE_COMMON_PARAMS% -DPX_OUTPUT_DLL_DIR=%PX_OUTPUT_ROOT%\bin\vc14win64-cmake -DPX_OUTPUT_LIB_DIR=%PX_OUTPUT_ROOT%\lib\vc14win64-cmake -DPX_OUTPUT_EXE_DIR=%PX_OUTPUT_ROOT%\bin\vc14win64-cmake
+popd
+
+rmdir /s /q compiler\vc17win64-cmake\
+mkdir compiler\vc17win64-cmake\
+pushd compiler\vc17win64-cmake\
+%CMAKE% ..\cmake\windows -G "Visual Studio 17 2022" -Ax64 %CMAKE_COMMON_PARAMS% -DPX_OUTPUT_DLL_DIR=%PX_OUTPUT_ROOT%\bin\vc17win64-cmake -DPX_OUTPUT_LIB_DIR=%PX_OUTPUT_ROOT%\lib\vc17win64-cmake -DPX_OUTPUT_EXE_DIR=%PX_OUTPUT_ROOT%\bin\vc17win64-cmake
 popd
 
 goto End
